@@ -44,12 +44,27 @@ namespace RomanNumerals.Logic
         {
             var mapRomanToNumber = _mapNumberToRoman.ToDictionary(t => t.Value, t => t.Key);
 
-            var remainder = input.ToList();
+            Stack<char> remainder = new();
+            input.ToList().ForEach(c => remainder.Push(c));
+
             var output = 0;
 
-            foreach(var romanLetter in input.Reverse())
+            while (remainder.Count > 0)
             {
-                output += mapRomanToNumber[romanLetter.ToString()];
+                var lastRoman = remainder.Pop().ToString();
+                var romanLetters = lastRoman;
+
+                if (remainder.Count > 0)
+                {
+                    var romanPair = remainder.Peek().ToString() + lastRoman;
+                    if (mapRomanToNumber.ContainsKey(romanPair))
+                    {
+                        remainder.Pop();
+                        romanLetters = romanPair;
+                    }
+                }
+
+                output += mapRomanToNumber[romanLetters];
             }
 
             return output;

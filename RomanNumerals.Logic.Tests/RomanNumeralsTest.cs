@@ -45,7 +45,7 @@ namespace RomanNumerals.Logic.Tests
         [InlineData(90, "XC")]
         [InlineData(400, "CD")]
         [InlineData(900, "CM")]
-        public void ToRoman_NextMinusPrevious_MatchesExpectation(int input, string expected)
+        public void ToRoman_NextMinusPreviousResult_MatchesExpectation(int input, string expected)
         {
             Assert.Equal(expected, RomanNumerals.ToRoman(input));
         }
@@ -87,6 +87,26 @@ namespace RomanNumerals.Logic.Tests
         [InlineData("VI", 6)]
         [InlineData("MDCLXVI", 1666)]
         public void FromRoman_SimpleMultipleNumeralsInput_MatchesExpectation(string input, int expected)
+        {
+            Assert.Equal(expected, RomanNumerals.FromRoman(input));
+        }
+
+        [Theory]
+        [InlineData("IV", 4)]
+        [InlineData("IX", 9)]
+        [InlineData("XL", 40)]
+        [InlineData("XC", 90)]
+        [InlineData("CD", 400)]
+        [InlineData("CM", 900)]
+        public void FromRoman_NextMinusPreviousInput_MatchesExpectation(string input, int expected)
+        {
+            Assert.Equal(expected, RomanNumerals.FromRoman(input));
+        }
+
+        [Theory]
+        [InlineData("MCMXCIX", 1999)]
+        [InlineData("MCDXLIV", 1444)]
+        public void FromRoman_ComplicatedStuff_MatchesExpectation(string input, int expected)
         {
             Assert.Equal(expected, RomanNumerals.FromRoman(input));
         }
